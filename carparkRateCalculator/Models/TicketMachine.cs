@@ -24,9 +24,9 @@ namespace carparkRateCalculator.Models
             return this.entry.CompareTo(exit) < 0;
         }
 
-        public bool IsWeekend()
+        public bool IsWeekend(DayOfWeek dayOfWeek)
         {
-            return entry.DayOfWeek == DayOfWeek.Saturday || entry.DayOfWeek == DayOfWeek.Sunday;
+            return dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday;
         }
 
         public void ProcessTicket()
@@ -44,7 +44,7 @@ namespace carparkRateCalculator.Models
 
         public void CheckEntryCondition()
         {
-            if (IsWeekend())
+            if (IsWeekend(entry.DayOfWeek))
             {
                 entryType = RateType.Weekend;
             }
@@ -87,7 +87,7 @@ namespace carparkRateCalculator.Models
             }
             else if (entryType == RateType.Weekend)
             {
-                if (IsWeekend())
+                if (IsWeekend(exit.DayOfWeek))
                 {
                     if (sameDay || nextDay)
                     {
